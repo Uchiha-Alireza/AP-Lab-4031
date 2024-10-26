@@ -82,28 +82,61 @@ Account& AccountList::at(int index)
     return *current;
 }
 
+Account* AccountList::split(Account* head) {
+    if (head == nullptr || head->next == nullptr) return head;
 
-void AccountList::sort()
-{
+    Account* slow = head;
+    Account* fast = head->next;
 
-    int n = size;
-    bool swapped;
-
-    for (int i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (int j = 0; j < n - i - 1; j++) {
-            if (this->at(j).getUniqeId() > this->at(j + 1).getUniqeId()) {
-                swap(at(j), at(j + 1));
-                swapped = true;
-            }
-        }
-
-        if (!swapped)
-            break;
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
     }
 
+    Account* second = slow->next;
+    slow->next = nullptr;
+    return second;
 }
 
+Account* AccountList::merge(Account* first, Account* second) {
+    if (first == nullptr) return second;
+    if (second == nullptr) return first;
+
+    if (first->getName()<= second->getName()) {
+        first->next = merge(first->next, second);
+        return first;
+    }
+    else {
+        second->next = merge(first, second->next);
+        return second;
+    }
+}
+
+Account* AccountList::MergeSort(Account* head) {
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    Account* second = split(head);
+    head = MergeSort(head);
+    second = MergeSort(second);
+    return merge(head, second);
+}
+Account* AccountList::split(Account* head) {
+    if (head == nullptr || head->next == nullptr) {
+        return nullptr; 
+    }
+
+    Account* slow = head;        
+    Account* fast = head->next;  
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;       
+        fast = fast->next->next; 
+    }
+
+    Account* secondHalf = slow->next; 
+    slow->next = nullptr; 
+    return secondHalf; 
+}
 
 void AccountList::print()
 {

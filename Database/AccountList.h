@@ -12,10 +12,9 @@ public:
 
 	/* find element number i */
 	Account& at(int i);
-
-	/* sort by account uniqe id */
-	void sort();
-
+	Account* merge(Account*, Account*);
+	Account* MergeSort(Account*);
+	Account* split(Account*);
 	/* search by the account uniqe id*/
 	Account search(int _uniqeId);
 

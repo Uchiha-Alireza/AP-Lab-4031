@@ -28,8 +28,7 @@ int main()
 {
 	AccountList *test = generateSomeRandomAccounts();
 	test->print();
-	test->sort();
-	std::cout << "\n \n";
+	Account* sortedHead = test->MergeSort(test->getHead());	std::cout << "\n \n";
 	test->print();
 	
 	return 0;
